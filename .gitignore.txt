@@ -1,0 +1,6 @@
+## Ignoramos todos los archivos que terminen en "pyc"
+*pyc
+
+## Ignoramos todos los archivos que terminen en "buffer.py"
+buffer.py
+Buffer.py

@@ -1,0 +1,3 @@
+[eub-config]
+new_folders_path = C:\EUB_Folder
+new_files_path = C:\EUB_Files
