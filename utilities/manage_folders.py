@@ -1,33 +1,42 @@
 import os
+import shutil
+
 import ConfigParser
 
 
+def create_folders():
+    base_folder = r"C:\_TEST_FOLDER"
 
-global globalPath
-
-
-def get_config_path():
-    p_path = ".."
-    os.getcwd()
-    os.chdir(p_path)
-    return os.getcwd() + r'\config\config_file.txt'
-
-
-def folder_file_path(f_path):
-    config = ConfigParser.RawConfigParser()
-    config.read(get_config_path())
-
-    global globalPath
-
-    if f_path == "folder":
-        globalPath = config.get('eub-config', 'new_folders_path')
-    elif f_path == "file":
-        globalPath = config.get('eub-config', 'new_files_path')
+    if os.path.exists(base_folder):
+        check_empty_folder(base_folder)
     else:
-        print "error"
+        os.mkdir(base_folder)
 
-    return globalPath
+
+def check_empty_folder(b_folder):
+    if os.listdir(b_folder):
+        delete_files(b_folder)
+    else:
+        delete_folder(b_folder)
+
+    os.mkdir(b_folder)
+
+
+def delete_files(del_file_folder):
+    for the_file in os.listdir(del_file_folder):
+        file_path = os.path.join(del_file_folder, the_file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            print(e)
+
+    delete_folder(del_file_folder)
+
+
+def delete_folder(del_folder):
+    shutil.rmtree(del_folder)
 
 
 if __name__ == "__main__":
-    print folder_file_path("folder")
+    create_folders()
