@@ -39,7 +39,7 @@ def create_test_folder():
 
     base_path = r"C:\_TEST_FOLDER"
     if os.path.isdir(base_path):
-        for i in range(1, 11):
+        for i in range(1, random.randint(1, 50)):
             os.mkdir(base_path + r"\Folder" + str(i))
 
 
@@ -62,7 +62,26 @@ def delete_n_test_folder(tot_folder):
         shutil.rmtree(r"C:\_TEST_FOLDER" + r"\\" + lst[i])
 
 
+def copy_test_folder(src, dst, symlinks=False, ignore=None):
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+    else:
+        shutil.rmtree(dst)
+
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            copy_test_folder(s, d, symlinks, ignore)
+        else:
+            if not os.path.exists(d) or os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
+                shutil.copy2(s, d)
+
+
 if __name__ == "__main__":
     create_test_folder()
     # delete_all_test_folder()
-    delete_n_test_folder(random.randint(1, len(os.listdir(r"C:\_TEST_FOLDER"))))
+    # delete_n_test_folder(random.randint(1, len(os.listdir(r"C:\_TEST_FOLDER"))))
+    # copy_test_folder(r"C:\_TEST_FOLDER", r"C:\_TMP")
+
+
