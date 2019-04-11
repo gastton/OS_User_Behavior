@@ -3,47 +3,33 @@ import shutil
 import random
 
 base_folder = r"C:\_TEST_FOLDER"
-tmp_folder = r"C:\_TMP"
-
 
 
 def create_base_folder():
     # This function have the main goal of create the folder that will be the base folder for this script.
     # In case that the base folder isn't empty, all the files/folder will be deleted
 
-    # base_folder = r"C:\_TEST_FOLDER"
-
     if os.path.exists(base_folder):
-        check_empty_base_folder(base_folder)
-    else:
-        os.mkdir(base_folder)
+        try:
+            shutil.rmtree(base_folder)
+        except Exception as os_e:
+            print os_e
+
+    os.mkdir(base_folder)
 
 
-def check_empty_base_folder(b_folder):
-    # Due to that the base folder exist, here I'll verify if it's empty or not
-    # In case that the base folder isn't empty I'll deleted and created again
-
-    if os.listdir(b_folder):
-        delete_base_folder(b_folder)
-
-    os.mkdir(b_folder)
-
-
-def delete_base_folder(del_folder):
-    try:
-        shutil.rmtree(del_folder)
-    except Exception as os_e:
-        print os_e
+def verify_base_folder_exist(base_folder):
+    return os.path.exists(base_folder)
 
 
 def create_test_folder():
-    # Create ten folders as part of OS_Behavior
+    # Create 50 folders as part of OS_Behavior
 
     create_base_folder()
 
-    # base_path = r"C:\_TEST_FOLDER"
     if os.path.isdir(base_folder):
-        for i in range(1, random.randint(1, 50)):
+        tot_folders = random.randint(1, 50)
+        for i in range(1, random.randint(1, tot_folders)):
             os.mkdir(base_folder + r"\Folder" + str(i))
 
 
@@ -86,6 +72,5 @@ if __name__ == "__main__":
     create_test_folder()
     # delete_all_test_folder()
     # delete_n_test_folder(random.randint(1, len(os.listdir(r"C:\_TEST_FOLDER"))))
-    copy_test_folder(base_folder, tmp_folder)
-
+    # copy_test_folder(base_folder, tmp_folder)
 
